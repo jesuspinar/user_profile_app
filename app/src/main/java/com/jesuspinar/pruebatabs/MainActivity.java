@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.jesuspinar.pruebatabs.ui.fragments.AccessData;
 import com.jesuspinar.pruebatabs.ui.fragments.PersonalData;
 import com.jesuspinar.pruebatabs.ui.fragments.ProfessionalData;
 
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements PersonalData.IOnA
 
         //Config tab bar
         TabLayout tabs = findViewById(R.id.tabs);
-        tabs.setTabMode(TabLayout.MODE_SCROLLABLE);
+        tabs.setTabMode(TabLayout.MODE_FIXED);
 
         //tab tittle
         toolbar.setTitle("");
@@ -42,9 +43,10 @@ public class MainActivity extends AppCompatActivity implements PersonalData.IOnA
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                 switch (position){
-                    case 0: tab.setText("Datos Personales"); break;
-                    case 1: tab.setText("Datos Profesionales"); break;
-                    //todo : default case
+                    case 0: tab.setText("Personal"); break;
+                    case 1: tab.setText("Professional"); break;
+                    case 2: tab.setText("Access"); break;
+                    default: tab.setText("Unnamed tab"); break;
                 }
             }
         });
@@ -76,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements PersonalData.IOnA
             switch (position){
                 case 0: return new PersonalData();
                 case 1: return new ProfessionalData();
+                case 2: return new AccessData();
                 default: return new PersonalData();
             }
         }
@@ -84,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements PersonalData.IOnA
         //todo change this return if more tabs
         @Override
         public int getItemCount() {
-            return 2;
+            return 3;
         }
     }
 

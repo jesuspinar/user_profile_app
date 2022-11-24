@@ -26,8 +26,8 @@ public class PersonalData extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        TextView tvPersonalData = view.findViewById(R.id.tvPersonalData);
-        tvPersonalData.setText(data);
+//        TextView tvPersonalData = view.findViewById(R.id.tvPersonalData);
+//        tvPersonalData.setText(data);
     }
 
     @Override
