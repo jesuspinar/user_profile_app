@@ -1,9 +1,11 @@
-package com.jesuspinar.pruebatabs;
+package com.jesuspinar.pruebatabs.controller;
 
 import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.jesuspinar.pruebatabs.R;
+import com.jesuspinar.pruebatabs.model.User;
 import com.jesuspinar.pruebatabs.ui.fragments.AccessData;
 import com.jesuspinar.pruebatabs.ui.fragments.PersonalData;
 import com.jesuspinar.pruebatabs.ui.fragments.ProfessionalData;
@@ -16,13 +18,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
-public class MainActivity extends AppCompatActivity implements PersonalData.IOnAttach, ProfessionalData.IOnAttach {
+public class MainActivity extends AppCompatActivity implements PersonalData.IOnAttach,
+        ProfessionalData.IOnAttach, AccessData.IOnAttach {
+
+    private User userTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        initData();
 
         ViewPager2 viewPager = findViewById(R.id.view_pager);
 
@@ -51,16 +58,31 @@ public class MainActivity extends AppCompatActivity implements PersonalData.IOnA
             }
         });
         tabLayoutMediator.attach();
+
+
+    }
+
+    private void initData() {
+        userTest = new User("none","12345678B", "Juan", "Palomo Garcia",
+                "04/08/1995", "C/Major, 35 - 03730 Xàbia",
+                "John Doe, S.L.", "B123456", "http://www.johndoe.com",
+                "juanpalomo@johndoe.com");
+
     }
 
     @Override
-    public String getPersonalData() {
-        return "Personal Data";
+    public User getPersonalData() {
+        return userTest;
     }
 
     @Override
-    public String getProfessionalData() {
-        return "Professional Data";
+    public User getProfessionalData() {
+        return userTest;
+    }
+
+    @Override
+    public User getAccessData() {
+        return userTest;
     }
 
     /**

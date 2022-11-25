@@ -24,7 +24,7 @@ public class Personal {
         this.surname = surname;
         this.address = address;
 
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date date = null;
         try {
             date = dateFormat.parse(birth);

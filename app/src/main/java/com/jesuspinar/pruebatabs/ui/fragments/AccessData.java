@@ -4,7 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,16 +19,14 @@ import com.jesuspinar.pruebatabs.model.User;
 public class AccessData extends Fragment {
 
     public interface IOnAttach{
-        User getUser();
+        User getAccessData();
     }
 
-    User user ;
+    private User user ;
 
     public AccessData() {
         super(R.layout.fragment_access);
     }
-
-    //ToDo: continue here, implement action button change password
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -37,7 +37,11 @@ public class AccessData extends Fragment {
         Button btnSaveChanges = view.findViewById(R.id.btnSaveChanges);
         ConstraintLayout clChangePwd = view.findViewById(R.id.clChangePwd);
 
-        tvUser.setText(user.getName());
+        EditText etOldPwd = view.findViewById(R.id.etOldPassword);
+        EditText etNewPwd = view.findViewById(R.id.etNewPassword);
+        EditText etConfirmPwd = view.findViewById(R.id.etConfirmPassword);
+
+        tvUser.setText(user.getUsername());
 
         btnChangePwd.setOnClickListener(v -> {
             int visibility = clChangePwd.getVisibility() == View.INVISIBLE ? View.VISIBLE : View.INVISIBLE;
@@ -46,20 +50,27 @@ public class AccessData extends Fragment {
 
         //implement second btnSaveChanges function
         btnSaveChanges.setOnClickListener(v -> {
-            //TODO: valid data
-
-            //TODO: submit form
-
+            boolean isValid = etOldPwd.getText().toString().equals(user.getPassword())
+                  && !etNewPwd.getText().toString().equals("")
+                  &&  etNewPwd.getText().toString().equals(etConfirmPwd.getText().toString());
+            if (isValid){
+                //submit form
+                user.setPwd(etNewPwd.getText().toString());
+                Toast.makeText(getContext(), "Password updated" ,Toast.LENGTH_LONG).show();
+                //TODO: update pwd for all app user instance
+            } else
+                Toast.makeText(getContext(), "Invalid field input" ,Toast.LENGTH_SHORT).show();
+            etOldPwd.setText("");
+            etNewPwd.setText("");
+            etConfirmPwd.setText("");
         });
-
-
     }
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         IOnAttach onAttach = (IOnAttach) context;
-        user = onAttach.getUser();
+        user = onAttach.getAccessData();
 
     }
 }
